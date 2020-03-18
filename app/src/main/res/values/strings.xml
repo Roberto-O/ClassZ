@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ClassZ</string>
+    <string name="create">Create</string>
+    <string name="join">Join</string>
+</resources>

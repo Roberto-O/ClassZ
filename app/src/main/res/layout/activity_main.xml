@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/txtClassZ"
+        android:layout_width="169dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="115dp"
+        android:fontFamily="@font/hungry_zombie_l"
+        android:text="@string/app_name"
+        android:textColor="#FFFFFF"
+        android:textSize="95sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="186dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="131dp"
+        android:layout_marginEnd="110dp"
+        android:background="@drawable/btn_round"
+        android:fontFamily="@font/hungry_zombie_l"
+        android:text="@string/create"
+        android:textColor="@color/btn_textcolor"
+        android:textSize="36sp"
+        app:layout_constrainedHeight="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtClassZ" />
+
+    <Button
+        android:id="@+id/btnJoin"
+        android:layout_width="186dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="110dp"
+        android:background="@drawable/btn_round"
+        android:fontFamily="@font/hungry_zombie_l"
+        android:text="@string/join"
+        android:textColor="@color/btn_textcolor"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCreate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
