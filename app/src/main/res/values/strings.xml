@@ -2,4 +2,12 @@
     <string name="app_name">ClassZ</string>
     <string name="create">Create</string>
     <string name="join">Join</string>
+    <string name="game_info">Your Game Code Is:</string>
+    <string name="enter_code">Enter Game Code</string>
+    <string name="create_username">Create a Username</string>
+    <string name="generate">Generate Game Code</string>
+    <string name="continue_text">Continue</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="game_code">#####</string>
+    <string name="username_text">Username</string>
 </resources>

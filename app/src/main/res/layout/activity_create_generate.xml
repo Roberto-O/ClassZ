@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".CreateActivityGenerate">
+
+
+    <TextView
+        android:id="@+id/tvYourCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="226dp"
+        android:layout_marginEnd="100dp"
+        android:text="@string/game_info"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnGenerate"
+        android:layout_width="180dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_round"
+        android:text="@string/generate"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/btnContinueGen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnContinueGen"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/btn_round"
+        android:text="@string/continue_text"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelGen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnCancelGen"
+        android:layout_width="181dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="114dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/btn_round"
+        android:text="@string/cancel_text"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvGameCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="150dp"
+        android:text="@string/game_code"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYourCode" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

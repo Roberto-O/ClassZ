@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/txtClassZ"
+        android:id="@+id/tvClassZ"
         android:layout_width="169dp"
         android:layout_height="114dp"
         android:layout_marginStart="123dp"
@@ -38,7 +38,7 @@
         app:layout_constrainedHeight="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtClassZ" />
+        app:layout_constraintTop_toBottomOf="@+id/tvClassZ" />
 
     <Button
         android:id="@+id/btnJoin"
