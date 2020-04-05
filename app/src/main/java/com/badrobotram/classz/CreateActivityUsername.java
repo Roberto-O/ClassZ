@@ -22,7 +22,7 @@ public class CreateActivityUsername extends AppCompatActivity {
     EditText txtUsername;
     Button btnContinueUname, btnCancelUname;
     private Socket socket;
-    private static final String SERVER = "http://192.168.50.126:3000";
+    private static final String SERVER = "http://192.168.50.126:3000"; //use your own ipv4 local address here since localhost won't work
 
     String uid = "";
     String gameCode = "";
@@ -69,7 +69,7 @@ public class CreateActivityUsername extends AppCompatActivity {
 
         try {
             JSONObject jsonData = new JSONObject(jsonString);
-            socket.emit("createGame", jsonData);
+            socket.emit("create game", jsonData);
         } catch (JSONException e) {
             e.printStackTrace();
         }
