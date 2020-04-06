@@ -2,7 +2,6 @@ package com.badrobotram.classz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,10 +16,10 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
-public class CreateActivityUsername extends AppCompatActivity {
+public class JoinActivityUsername extends AppCompatActivity {
 
     EditText txtUsername;
-    Button btnContinueUname, btnCancelUname;
+    Button btnContinueUnameJoin, btnCancelUnameJoin;
     private Socket socket;
     private static final String SERVER = "http://192.168.50.126:3000"; //use your own ipv4 local address here since localhost won't work
 
@@ -31,33 +30,32 @@ public class CreateActivityUsername extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_username);
+        setContentView(R.layout.activity_join_username);
 
         gameCode = getIntent().getStringExtra("game-code");
         uid = getIntent().getStringExtra("uid");
 
-        txtUsername = findViewById(R.id.txtUsername);
+        txtUsername = findViewById(R.id.txtUsernameJoin);
 
-        //Continue Button in Username Create
-        btnContinueUname = findViewById(R.id.btnContinueUname);
-        btnContinueUname.setOnClickListener(new View.OnClickListener() {
+        //Continue Button in Username Join
+        btnContinueUnameJoin = findViewById(R.id.btnContinueUnameJoin);
+        btnContinueUnameJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 username = txtUsername.getText().toString();
 
                 if(!username.isEmpty()){
-                    Toast.makeText(CreateActivityUsername.this, username + " is hosting game " + gameCode, Toast.LENGTH_SHORT).show();
                     setName(uid, username);
-                    createGame(gameCode, uid);
+                    joinGame(gameCode, uid);
                 }else{
-                    Toast.makeText(CreateActivityUsername.this, "Please create a username", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivityUsername.this, "Please create a username", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        //Cancel Button in Username Create
-        btnCancelUname = findViewById(R.id.btnCancelUname);
-        btnCancelUname.setOnClickListener(new View.OnClickListener() {
+        //Cancel Button in Username Join
+        btnCancelUnameJoin = findViewById(R.id.btnCancelUnameJoin);
+        btnCancelUnameJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 finish();
@@ -65,18 +63,6 @@ public class CreateActivityUsername extends AppCompatActivity {
         });
 
     }// end onCreate() method
-
-    private void createGame(String gc, String userID){
-        String jsonString = "{gameID: '" + gc + "', userID: '" + userID + "'}";
-
-        try {
-            JSONObject jsonData = new JSONObject(jsonString);
-            socket.emit("create game", jsonData);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void setName(String uid, String uname){
         String jsonString = "{userID: '" + uid + "', uname: '" + uname + "'}";
@@ -99,10 +85,22 @@ public class CreateActivityUsername extends AppCompatActivity {
 
     }//end join() method
 
+    private void joinGame(String gc, String userID){
+        String jsonString = "{gameID: '" + gc + "', userID: '" + userID + "'}";
+
+        try {
+            JSONObject jsonData = new JSONObject(jsonString);
+            socket.emit("join game", jsonData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         socket.disconnect();
     }
+}
 
-}//end class

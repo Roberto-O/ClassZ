@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".CreateActivityGenerate">
-
+    android:background="#000000"
+    tools:context=".JoinActivityUsername">
 
     <TextView
-        android:id="@+id/tvCreateUsername"
+        android:id="@+id/tvCreateUsernameJoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="105dp"
@@ -23,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtUsername"
+        android:id="@+id/txtUsernameJoin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
@@ -37,10 +36,10 @@
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCreateUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCreateUsernameJoin" />
 
     <Button
-        android:id="@+id/btnContinueUname"
+        android:id="@+id/btnContinueUnameJoin"
         android:layout_width="105dp"
         android:layout_height="48dp"
         android:layout_marginStart="153dp"
@@ -49,12 +48,12 @@
         android:background="@drawable/btn_round"
         android:text="@string/continue_text"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/btnCancelUname"
+        app:layout_constraintBottom_toTopOf="@+id/btnCancelUnameJoin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnCancelUname"
+        android:id="@+id/btnCancelUnameJoin"
         android:layout_width="105dp"
         android:layout_height="48dp"
         android:layout_marginStart="153dp"

@@ -22,11 +22,11 @@ public class CreateActivityGenerate extends AppCompatActivity {
 
     Button btnGenerate, btnContinue, btnCancel;
     TextView tvGameCode;
-    String gameCode;
 
     private static final String GEN_API = "http://192.168.50.126:3000/generate";
     private static final String SERVER = "http://192.168.50.126:3000";
     private Socket socket;
+    private String gameCode;
     private String uniqueID = UUID.randomUUID().toString();
 
     @Override
@@ -59,13 +59,13 @@ public class CreateActivityGenerate extends AppCompatActivity {
                 CreateActivityGenerate.HttpGetRequest request = new CreateActivityGenerate.HttpGetRequest();
                 request.execute(); //Makes a GET request to our generate API
 
-                btnGenerate.setAlpha(.5f);
-                btnGenerate.setClickable(false);
             }
         });
 
         //Continue Button from Generate Page
         btnContinue = findViewById(R.id.btnContinueGen);
+        btnContinue.setAlpha(.5f);
+        btnContinue.setClickable(false);
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -93,7 +93,7 @@ public class CreateActivityGenerate extends AppCompatActivity {
         if (socket.connected()){
             socket.emit("generate code");
         }else{
-            Toast.makeText(CreateActivityGenerate.this, "Unable to generate code", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateActivityGenerate.this, "Unable to connect to server", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -146,6 +146,15 @@ public class CreateActivityGenerate extends AppCompatActivity {
             super.onPostExecute(result);
             gameCode = result;
             tvGameCode.setText(gameCode);
+
+            if(gameCode.equals("error") || gameCode.equals("undefined")){
+                Toast.makeText(CreateActivityGenerate.this, "Unable to connect to server", Toast.LENGTH_SHORT).show();
+            }else{
+                btnGenerate.setAlpha(.5f);
+                btnGenerate.setClickable(false);
+                btnContinue.setAlpha(1f);
+                btnContinue.setClickable(true);
+            }
         }
     }
 
