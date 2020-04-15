@@ -1,16 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
     tools:context=".LobbyActivity">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvClassZLobby"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:text="@string/classz_lobby_text"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/tvPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="0"
+        android:gravity="right"
+        android:paddingRight="50dp"
+        android:text="@string/players_text"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlayerList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lobby"
-        tools:layout_editor_absoluteX="186dp"
-        tools:layout_editor_absoluteY="184dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_weight="8"
+        android:background="#FFFEF6">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelLobby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_round"
+            android:text="@string/cancel_text"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnStartLobby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_round"
+            android:text="@string/start_text"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/tvStartingSoon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/startingSoon"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>

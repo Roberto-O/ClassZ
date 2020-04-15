@@ -25,7 +25,7 @@ public class JoinActivity extends AppCompatActivity {
     Button btnContinueJoin;
     Button btnCancelJoin;
     private Socket socket;
-    private static final String SERVER = "http://192.168.50.126:3000";
+    private static final String SERVER = "http://192.168.1.138:3000";
     private String gameCode = "";
     private String uniqueID = UUID.randomUUID().toString();
     private boolean gameExists = false;

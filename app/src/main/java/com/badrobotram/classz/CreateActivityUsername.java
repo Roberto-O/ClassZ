@@ -22,7 +22,7 @@ public class CreateActivityUsername extends AppCompatActivity {
     EditText txtUsername;
     Button btnContinueUname, btnCancelUname;
     private Socket socket;
-    private static final String SERVER = "http://192.168.50.126:3000"; //use your own ipv4 local address here since localhost won't work
+    private static final String SERVER = "http://192.168.1.138:3000";; //use your own ipv4 local address here since localhost won't work
 
     String uid = "";
     String gameCode = "";
@@ -46,9 +46,14 @@ public class CreateActivityUsername extends AppCompatActivity {
                 username = txtUsername.getText().toString();
 
                 if(!username.isEmpty()){
-                    Toast.makeText(CreateActivityUsername.this, username + " is hosting game " + gameCode, Toast.LENGTH_SHORT).show();
                     setName(uid, username);
                     createGame(gameCode, uid);
+
+                    Intent intent = new Intent(CreateActivityUsername.this, LobbyActivity.class);
+                    intent.putExtra("game-code", gameCode);
+                    intent.putExtra("uid", uid);
+                    startActivity(intent);
+                    finish();
                 }else{
                     Toast.makeText(CreateActivityUsername.this, "Please create a username", Toast.LENGTH_SHORT).show();
                 }

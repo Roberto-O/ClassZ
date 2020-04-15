@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LobbyActivity"></activity>
+        <activity android:name=".LobbyActivity" />
         <activity android:name=".JoinActivityUsername" />
         <activity android:name=".CreateActivityUsername" />
         <activity android:name=".JoinActivity" />

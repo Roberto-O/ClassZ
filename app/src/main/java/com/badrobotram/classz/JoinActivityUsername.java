@@ -2,6 +2,7 @@ package com.badrobotram.classz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ public class JoinActivityUsername extends AppCompatActivity {
     EditText txtUsername;
     Button btnContinueUnameJoin, btnCancelUnameJoin;
     private Socket socket;
-    private static final String SERVER = "http://192.168.50.126:3000"; //use your own ipv4 local address here since localhost won't work
+    private static final String SERVER = "http://192.168.1.138:3000"; //use your own ipv4 local address here since localhost won't work
 
     String uid = "";
     String gameCode = "";
@@ -47,6 +48,12 @@ public class JoinActivityUsername extends AppCompatActivity {
                 if(!username.isEmpty()){
                     setName(uid, username);
                     joinGame(gameCode, uid);
+
+                    Intent intent = new Intent(JoinActivityUsername.this, LobbyActivity.class);
+                    intent.putExtra("game-code", gameCode);
+                    intent.putExtra("uid", uid);
+                    startActivity(intent);
+                    finish();
                 }else{
                     Toast.makeText(JoinActivityUsername.this, "Please create a username", Toast.LENGTH_SHORT).show();
                 }
