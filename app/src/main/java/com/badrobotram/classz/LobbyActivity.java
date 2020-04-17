@@ -15,12 +15,12 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class LobbyActivity extends AppCompatActivity {
 
@@ -47,18 +47,25 @@ public class LobbyActivity extends AppCompatActivity {
         gameCode = getIntent().getStringExtra("game-code");
         uid = getIntent().getStringExtra("uid");
 
+
+        //point to server
         try {
-            //point to server
             socket = IO.socket(SERVER);
-
-            //create connection
-            socket.connect();
-
-            getPlayers(gameCode);
-            getName(uid);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
+        //create connection *needs to be delayed by .7 seconds or else glitches and disconnects
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                socket.connect();
+                getPlayers(gameCode);
+                getName(uid);
+                socket.emit("test", "onCreate Lobby");
+            }
+        }, 700);
+
 
         tvPlayers = findViewById(R.id.tvPlayers);
         tvPlayers.setText("Players: ");
@@ -67,8 +74,9 @@ public class LobbyActivity extends AppCompatActivity {
         btnStartLobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+                startCountdown();
                 //Intent intent = new Intent(LobbyActivity.this, Game.class);
-                //startActivity(intent); //switch to generate game code page
+                //startActivity(intent);
             }
         });
 
@@ -88,6 +96,35 @@ public class LobbyActivity extends AppCompatActivity {
         adapter = new MyRecyclerViewAdapter(players);
         recyclerView.setAdapter( adapter );
 
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000); //sleep one second
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                getPlayers(gameCode); //check for new players
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+        };
+
+        t.start();
+    }//end onCreate()
+
+    private void startCountdown(){
+        //coming soon
+    }
+
+    private void getPlayers(String gameId){
+
+        socket.emit("get players", gameId);
 
         socket.on("rec players", new Emitter.Listener() { //listen for 'rec players' emit from server
             @Override
@@ -109,7 +146,6 @@ public class LobbyActivity extends AppCompatActivity {
                                 }
                             }
                         } catch (JSONException e) {
-                            System.out.println("****** ERROR ********");
                             e.printStackTrace();
                         }
                         for(String p : players){
@@ -121,6 +157,11 @@ public class LobbyActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void getName(String id){
+
+        socket.emit("get username", id);
 
         socket.on("rec username", new Emitter.Listener() {
             @Override
@@ -130,21 +171,17 @@ public class LobbyActivity extends AppCompatActivity {
                     public void run() {
                         String data = (String) args[0];
                         username = data;
-                        Toast.makeText(LobbyActivity.this, "You are " + username, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LobbyActivity.this, username + " has joined", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
     }
 
-    private void getPlayers(String gameId){
-
-        socket.emit("get players", gameId);
-    }
-
-    private void getName(String id){
-
-        socket.emit("get username", id);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socket.disconnect();
     }
 
 }

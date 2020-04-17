@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(MainActivity.this, CreateActivityGenerate.class);
-                //Intent intent = new Intent(MainActivity.this, TestGenActivity.class);
                 startActivity(intent); //switch to generate game code page
             }
         });
