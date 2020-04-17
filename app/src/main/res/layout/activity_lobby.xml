@@ -24,7 +24,7 @@
         android:layout_height="45dp"
         android:layout_weight="0"
         android:gravity="right"
-        android:paddingRight="50dp"
+        android:paddingRight="15dp"
         android:text="@string/players_text"
         android:textColor="#FFFFFF"
         android:textSize="22sp" />

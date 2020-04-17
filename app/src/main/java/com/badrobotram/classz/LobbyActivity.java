@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,16 +29,18 @@ public class LobbyActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager llm;
     private Socket socket;
+
     private static final String SERVER = "http://192.168.1.138:3000"; //use your own ipv4 local address here since localhost won't work
 
-    Button btnCancelLobby, btnStartLobby;
-    TextView tvPlayers;
+    private Button btnCancelLobby, btnStartLobby;
+    private TextView tvPlayers, tvCountdown;
 
-    String gameCode = "";
-    String uid = "";
-    String username = "";
-    ArrayList<String> players = new ArrayList<>();
-    HashSet<String> h = new HashSet<>();
+    private String gameCode = "";
+    private String uid = "";
+    private String username = "";
+    private boolean amIHost = false;
+    private ArrayList<String> players = new ArrayList<>();
+    private HashSet<String> h = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +63,10 @@ public class LobbyActivity extends AppCompatActivity {
             @Override
             public void run() {
                 socket.connect();
-                getPlayers(gameCode);
+                socket.emit("link", gameCode);
                 getName(uid);
-                socket.emit("test", "onCreate Lobby");
+                getPlayers(gameCode);
+                amIHostCheck(gameCode, uid);
             }
         }, 700);
 
@@ -70,16 +74,19 @@ public class LobbyActivity extends AppCompatActivity {
         tvPlayers = findViewById(R.id.tvPlayers);
         tvPlayers.setText("Players: ");
 
+        tvCountdown = findViewById(R.id.tvStartingSoon);
+        tvCountdown.setText("Starting Soon...");
+
+        //Start Button Lobby
         btnStartLobby = findViewById(R.id.btnStartLobby);
         btnStartLobby.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                startCountdown();
-                //Intent intent = new Intent(LobbyActivity.this, Game.class);
-                //startActivity(intent);
+                socket.emit("start countdown", gameCode);
             }
         });
 
+        //Cancel Button Lobby
         btnCancelLobby = findViewById(R.id.btnCancelLobby);
         btnCancelLobby.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,17 +116,72 @@ public class LobbyActivity extends AppCompatActivity {
                             }
                         });
                     }
-                } catch (InterruptedException e) {
-                    System.out.println(e);
-                }
+                } catch (InterruptedException e) { }
             }
         };
 
         t.start();
+
+        socket.on("begin countdown", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new CountDownTimer(11500, 1000) {
+                            int i = 10;
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                tvCountdown.setText(i + "");
+                                i--;
+                                if(i < 0){
+                                    onFinish();
+                                }
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                tvCountdown.setText("Starting Game");
+                                //Intent intent = new Intent(LobbyActivity.this, Game.class);
+                                //startActivity(intent);
+                            }
+                        }.start();
+                    }
+                });
+            }
+        });
     }//end onCreate()
 
-    private void startCountdown(){
-        //coming soon
+    private void amIHostCheck(String gc, String userid){
+        String jsonString = "{gameID: '" + gc + "', userID: '" + userid + "'}";
+
+        try {
+            JSONObject jsonData = new JSONObject(jsonString);
+            socket.emit("get host", jsonData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        socket.on("am host", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String data = (String) args[0];
+                        amIHost = Boolean.valueOf(data);
+
+                        if(!amIHost){
+                            btnStartLobby.setAlpha(.5f);
+                            btnStartLobby.setClickable(false);
+                        }else{
+                            Toast.makeText(LobbyActivity.this, "You are host!", Toast.LENGTH_SHORT).show();
+                            tvPlayers.setText("Host: " + username + "    Players: " + players.size());
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void getPlayers(String gameId){
@@ -152,7 +214,19 @@ public class LobbyActivity extends AppCompatActivity {
                             System.out.println(p);
                         }
                         adapter.notifyDataSetChanged(); //update list
-                        tvPlayers.setText("Players: " + players.size());
+                    }//end run()
+                });
+            }
+        });
+
+        socket.on("host name", new Emitter.Listener() { //listen for 'rec players' emit from server
+            @Override
+            public void call(final Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String data = (String) args[0];
+                        tvPlayers.setText("Host: " + data + "    Players: " + players.size());
                     }//end run()
                 });
             }
